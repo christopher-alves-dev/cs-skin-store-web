@@ -1,101 +1,134 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useState } from "react";
+import {
+  Image,
+  Text,
+  Stack,
+  Heading,
+  Spinner,
+  Alert,
+  AlertIcon,
+  Card,
+  CardBody,
+  SimpleGrid,
+  Container,
+  Input,
+  HStack,
+  Button,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+} from "@chakra-ui/react";
+
+import { itemsApi } from "./services/items";
+import { ChevronDownIcon } from "@chakra-ui/icons";
+
+interface Item {
+  id: string;
+  name: string;
+  image: string;
+  category: string;
+  float?: string;
+  price: number;
+}
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [items, setItems] = useState<Item[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  // Fetch de itens no carregamento da página
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const res = await itemsApi.index(); // URL do backend
+        const data = await res.json();
+        if (res.ok) {
+          setItems(data); // Setando os itens recebidos
+        } else {
+          setError("Erro ao buscar os itens");
+        }
+      } catch (error) {
+        console.log({ error });
+        setError("Erro ao conectar com o servidor");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchItems();
+  }, []);
+
+  if (loading) return <Spinner size="xl" color="teal.500" />;
+  if (error)
+    return (
+      <Alert status="error">
+        <AlertIcon />
+        {error}
+      </Alert>
+    );
+
+  return (
+    <Container maxW="8xl" p={8}>
+      <HStack>
+        <Input placeholder="Procurar skin pelo nome" maxW={400} />
+        <Menu>
+          <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+            Ordenar por
+          </MenuButton>
+          <MenuList>
+            <MenuItem>Download</MenuItem>
+            <MenuItem>Create a Copy</MenuItem>
+            <MenuItem>Mark as Draft</MenuItem>
+            <MenuItem>Delete</MenuItem>
+            <MenuItem>Attend a Workshop</MenuItem>
+          </MenuList>
+        </Menu>
+        <Button colorScheme="blue">Pesquisar</Button>
+      </HStack>
+      <Stack spacing={8} p={5}>
+        <Heading as="h1" size="xl" mb={5}>
+          Lista de Itens
+        </Heading>
+        {items.length === 0 ? (
+          <Text>Nenhum item encontrado.</Text>
+        ) : (
+          <SimpleGrid
+            columns={{ base: 1, sm: 2, md: 3, lg: 4, xl: 6 }}
+            spacing={8}
           >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+            {items.map((item) => (
+              <Card key={item.id} shadow="md" borderWidth="1px" rounded="lg">
+                <CardBody>
+                  <Stack spacing={4} align="center">
+                    <Stack className="w-full">
+                      <Heading as="h4" size="sm">
+                        {item.name}
+                      </Heading>
+                      <Text fontSize="sm" color="darkslategray">
+                        {item.category}
+                      </Text>
+                    </Stack>
+                    <Image
+                      boxSize="160px"
+                      objectFit="cover"
+                      src="https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposr-kLAtl7PDdTjlH7duJhJKCmePnJ6nUl2Zu5Mx2gv2P9o-t21fj-RI_Nz2ncYbDcFNoYArYrgDql-3m08PptcjBn3tgs3Yis2GdwUJr9IfvpA/"
+                      alt={item.name}
+                      borderRadius="md"
+                    />
+                    <Stack spacing={2} className="w-full">
+                      <Text>Preço: R$ {item.price.toFixed(2)}</Text>
+                      <Text>Float: {item.float || "N/A"}</Text>
+                    </Stack>
+                  </Stack>
+                </CardBody>
+              </Card>
+            ))}
+          </SimpleGrid>
+        )}
+      </Stack>
+    </Container>
   );
 }
