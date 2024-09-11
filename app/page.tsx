@@ -14,15 +14,16 @@ import {
   SimpleGrid,
   Container,
   Input,
-  HStack,
   Button,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
+  Wrap,
+  WrapItem,
 } from "@chakra-ui/react";
 
-import { itemsApi } from "./services/items";
+import { itemsApi } from "./services/api/items";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 
 interface Item {
@@ -38,18 +39,16 @@ export default function Home() {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [orderBy, setOrderBy] = useState("");
+  const [orderDirection, setOrderDirection] = useState("");
 
-  // Fetch de itens no carregamento da página
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const res = await itemsApi.index(); // URL do backend
-        const data = await res.json();
-        if (res.ok) {
-          setItems(data); // Setando os itens recebidos
-        } else {
-          setError("Erro ao buscar os itens");
-        }
+        const res = await itemsApi.index();
+        console.log({ res: res.data });
+
+        setItems(res.data);
       } catch (error) {
         console.log({ error });
         setError("Erro ao conectar com o servidor");
@@ -72,22 +71,52 @@ export default function Home() {
 
   return (
     <Container maxW="8xl" p={8}>
-      <HStack>
-        <Input placeholder="Procurar skin pelo nome" maxW={400} />
-        <Menu>
-          <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-            Ordenar por
-          </MenuButton>
-          <MenuList>
-            <MenuItem>Download</MenuItem>
-            <MenuItem>Create a Copy</MenuItem>
-            <MenuItem>Mark as Draft</MenuItem>
-            <MenuItem>Delete</MenuItem>
-            <MenuItem>Attend a Workshop</MenuItem>
-          </MenuList>
-        </Menu>
-        <Button colorScheme="blue">Pesquisar</Button>
-      </HStack>
+      <Wrap spacing={4}>
+        <WrapItem as="div" className="w-full" maxW={400}>
+          <Input placeholder="Procurar skin pelo nome" size={["sm", "md"]} />
+        </WrapItem>
+        <WrapItem>
+          <Menu>
+            <MenuButton
+              as={Button}
+              rightIcon={<ChevronDownIcon />}
+              size={["sm", "md"]}
+            >
+              {orderBy || "Ordenar por"}
+            </MenuButton>
+            <MenuList onChange={(e) => console.log({ e })}>
+              <MenuItem onClick={() => setOrderBy("price")}>Preço</MenuItem>
+              <MenuItem onClick={() => setOrderBy("float")}>
+                Float (Desgaste)
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        </WrapItem>
+        <WrapItem>
+          <Menu>
+            <MenuButton
+              as={Button}
+              rightIcon={<ChevronDownIcon />}
+              size={["sm", "md"]}
+            >
+              {orderDirection || "Ordem"}
+            </MenuButton>
+            <MenuList>
+              <MenuItem onClick={() => setOrderDirection("asc")}>
+                Crescente
+              </MenuItem>
+              <MenuItem onClick={() => setOrderDirection("desc")}>
+                Decrescente
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        </WrapItem>
+        <WrapItem>
+          <Button colorScheme="blue" size={["sm", "md"]}>
+            Pesquisar
+          </Button>
+        </WrapItem>
+      </Wrap>
       <Stack spacing={8} p={5}>
         <Heading as="h1" size="xl" mb={5}>
           Lista de Itens
