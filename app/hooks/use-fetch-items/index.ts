@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { itemsApi } from "../../services/api/items";
 import { FindAllParams } from "../../services/api/items/types";
 
-interface Item {
+type Item = {
   id: string;
   name: string;
   image: string;
   category: string;
   float?: string;
   price: number;
-}
+};
 
 export const useFetchItems = () => {
   const [items, setItems] = useState<Item[]>([]);
