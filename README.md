@@ -20,9 +20,29 @@ Bem-vindo ao projeto da Landing Page para exibir uma lista de Skins de Counter S
 - **React Hook Form**: Facilita a criação e validação de formulários.
 - **Zod**: Para validação de dados e garantias de tipo.
 
+## Faça o clone do projeto
+
+Acesse a pasta que deseja fazer o clone do projeto e rode o comando abaixo
+
+```bash
+git clone https://github.com/christopher-alves-dev/cs-skin-store-web.git
+```
+
+## Configuração de Variáveis de Ambiente
+
+Para garantir que seu ambiente de desenvolvimento esteja configurado corretamente, você precisará definir algumas variáveis de ambiente. Siga as instruções abaixo para configurar essas variáveis.
+
+### Passo 1: Criar o Arquivo `.env`
+
+Na raiz do projeto, crie um arquivo chamado `.env`. Esse arquivo será usado para definir suas variáveis de ambiente. O arquivo deve seguir o formato `VARIAVEL=valor`, uma por linha.
+
+### Passo 2: Definir as Variáveis de Ambiente
+
+Você pode utilizar o arquivo de tipagens de env `env.d.ts` na raíz do projeto como exemplo para configurar as variáveis.
+
 ## Como Rodar
 
-Primeiro, rode em modo de desenvolvimento.
+Para rodar em modo de desenvolvimento.
 
 ```bash
 npm run dev
