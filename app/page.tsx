@@ -1,51 +1,43 @@
 "use client";
 
 import {
-  Image,
-  Text,
-  Stack,
-  Heading,
-  Spinner,
+  Accordion,
+  AccordionButton,
+  AccordionItem,
+  AccordionPanel,
   Alert,
   AlertIcon,
-  Card,
-  CardBody,
-  SimpleGrid,
-  Container,
+  Box,
   Button,
+  Container,
+  Divider,
+  FormLabel,
+  Heading,
+  HStack,
+  SimpleGrid,
+  Spinner,
+  Stack,
+  Text,
+  VStack,
   Wrap,
   WrapItem,
-  Divider,
-  Box,
-  VStack,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  FormLabel,
-  HStack,
 } from "@chakra-ui/react";
 
-import { sortOptions, categoryOptions } from "./utils";
-import { useFetchItems } from "./hooks/use-fetch-items";
+import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import { FormProvider, SubmitHandler } from "react-hook-form";
-import { InputForm } from "./components/input-form";
-import { useFilterForm } from "./hooks/use-filter-form";
 import { DropdownForm } from "./components";
+import { InputForm } from "./components/input-form";
+import { ItemCard } from "./components/item-card";
+import { useFetchItems } from "./hooks/use-fetch-items";
+import { useFilterForm } from "./hooks/use-filter-form";
 import { FilterFormData } from "./hooks/use-filter-form/schema";
+import { categoryOptions, sortOptions } from "./utils";
 import { parseParams } from "./utils/parse-params";
-import { parseToCurrency } from "./utils/parse-to-currency";
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  TriangleDownIcon,
-} from "@chakra-ui/icons";
 
 export default function Home() {
   const { items, error, loading, fetchItems } = useFetchItems();
   const { formMethods } = useFilterForm();
 
-  // console.log({ errors: formMethods.formState.errors });
   const onSubmit: SubmitHandler<FilterFormData> = async (formValues) => {
     console.log({ formValues });
     const params = parseParams(formValues);
@@ -178,81 +170,7 @@ export default function Home() {
               spacing={8}
             >
               {items.map((item) => {
-                return (
-                  <Card
-                    key={item.id}
-                    shadow="md"
-                    borderWidth="2px"
-                    borderColor="blackAlpha.300"
-                    rounded="lg"
-                  >
-                    <CardBody>
-                      <Box
-                        display="flex"
-                        flexDir="column"
-                        gap={4}
-                        h="100%"
-                        alignItems="center"
-                        justifyContent="space-between"
-                      >
-                        <Stack w="100%">
-                          <Heading as="h4" size="sm">
-                            {item.name}
-                          </Heading>
-                          <Text fontSize="sm" color="darkslategray">
-                            {item.category}
-                          </Text>
-                        </Stack>
-                        <Image
-                          objectFit="contain"
-                          src={item.image}
-                          alt={item.name}
-                          borderRadius="md"
-                        />
-                        <Stack spacing={2} w="100%">
-                          <Text textAlign="center">
-                            {parseToCurrency(item.price)}
-                          </Text>
-
-                          {!!item.float && (
-                            <>
-                              <Box
-                                display="flex"
-                                flexDirection="column"
-                                position="relative"
-                                pt={2.5}
-                              >
-                                <TriangleDownIcon
-                                  fontSize={10}
-                                  position="absolute"
-                                  top={0}
-                                  left={`${Number(item.float) * 100}%`}
-                                  transform="translateX(-50%)"
-                                />
-                                <HStack
-                                  w="100%"
-                                  h={2}
-                                  spacing={0}
-                                  borderRadius="99"
-                                  overflow="hidden"
-                                >
-                                  <Box bg="darkgreen" w="7%" h="inherit" />
-                                  <Box bg="green" w="8%" h="inherit" />
-                                  <Box bg="yellow" w="22.99%" h="inherit" />
-                                  <Box bg="coral" w="7%" h="inherit" />
-                                  <Box bg="red" w="57.58%" h="inherit" />
-                                </HStack>
-                              </Box>
-                              <Text textAlign="center" fontSize={"small"}>
-                                float: {item.float}
-                              </Text>
-                            </>
-                          )}
-                        </Stack>
-                      </Box>
-                    </CardBody>
-                  </Card>
-                );
+                return <ItemCard key={item.id} data={item} />;
               })}
             </SimpleGrid>
           )}
