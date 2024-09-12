@@ -1,38 +1,44 @@
 import { FilterFormData } from "../hooks/use-filter-form/schema";
-import { FindAllParams } from "../services/api/items/types";
+import { FilterRange, FindAllParams } from "../services/api/items/types";
+
+const isValidValue = <G>(value: G): boolean =>
+  value !== undefined && (typeof value !== "string" || value.trim() !== "");
+
+const addParam = <T extends object, K extends keyof T>(
+  target: T,
+  key: K,
+  value: T[K]
+) => {
+  if (isValidValue(value)) {
+    target[key] = value;
+  }
+};
+
+const parseRangeParams = (
+  min?: number,
+  max?: number
+): FilterRange | undefined => {
+  if (min !== undefined || max !== undefined) {
+    return [min ?? undefined, max ?? undefined];
+  }
+  return undefined;
+};
 
 export const parseParams = (formValues: FilterFormData): FindAllParams => {
   const parsedData: FindAllParams = {};
 
-  if (formValues.name) {
-    parsedData.name = formValues.name;
-  }
+  addParam(parsedData, "name", formValues.name);
+  addParam(parsedData, "category", formValues.category?.value);
 
-  if (formValues.category?.value) {
-    parsedData.category = formValues.category.value;
-  }
+  const price = parseRangeParams(formValues.price?.min, formValues.price?.max);
+  const float = parseRangeParams(formValues.float?.min, formValues.float?.max);
 
-  if (formValues.price) {
-    parsedData.price = [
-      formValues.price.min !== undefined ? formValues.price.min : 0,
-      formValues.price.max || undefined,
-    ];
-  }
+  addParam(parsedData, "price", price);
+  addParam(parsedData, "float", float);
 
-  if (formValues.float) {
-    parsedData.float = [
-      formValues.float.min !== undefined ? formValues.float.min : undefined,
-      formValues.float.max || undefined,
-    ];
-  }
+  addParam(parsedData, "orderBy", formValues.orderBy?.value);
+  addParam(parsedData, "orderDirection", formValues.orderDirection?.value);
 
-  if (formValues.orderBy?.value) {
-    parsedData.orderBy = formValues.orderBy.value;
-  }
-
-  if (formValues.orderDirection?.value) {
-    parsedData.orderDirection = formValues.orderDirection.value;
-  }
-
+  console.log({ parsedData });
   return parsedData;
 };

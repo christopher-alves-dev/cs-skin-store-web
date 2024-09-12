@@ -1,7 +1,11 @@
+type NumberOrUndefined = number | undefined;
+
+export type FilterRange = [NumberOrUndefined, NumberOrUndefined];
+
 type FilterParams = {
   category?: string;
-  price?: [number, number | undefined];
-  float?: [number | undefined, number | undefined];
+  price?: FilterRange;
+  float?: FilterRange;
   name?: string;
 };
 
