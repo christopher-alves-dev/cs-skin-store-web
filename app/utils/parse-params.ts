@@ -14,15 +14,15 @@ export const parseParams = (formValues: FilterFormData): FindAllParams => {
 
   if (formValues.price) {
     parsedData.price = [
-      formValues.price.min !== undefined ? formValues.price.min : 0,
-      formValues.price.max !== undefined ? formValues.price.max : undefined,
+      formValues.price.min || 0,
+      formValues.price.max || undefined,
     ];
   }
 
   if (formValues.float) {
     parsedData.float = [
-      formValues.float.min !== undefined ? formValues.float.min : 0,
-      formValues.float.max !== undefined ? formValues.float.max : undefined,
+      formValues.float.min || undefined,
+      formValues.float.max || undefined,
     ];
   }
 

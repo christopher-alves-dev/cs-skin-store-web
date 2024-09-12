@@ -191,6 +191,7 @@ export default function Home() {
                         display="flex"
                         flexDir="column"
                         gap={4}
+                        h="100%"
                         alignItems="center"
                         justifyContent="space-between"
                       >
@@ -203,7 +204,6 @@ export default function Home() {
                           </Text>
                         </Stack>
                         <Image
-                          flex="1"
                           objectFit="contain"
                           src={item.image}
                           alt={item.name}

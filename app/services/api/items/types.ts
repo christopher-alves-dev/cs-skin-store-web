@@ -1,7 +1,7 @@
 type FilterParams = {
   category?: string;
   price?: [number, number | undefined];
-  float?: [number, number | undefined];
+  float?: [number | undefined, number | undefined];
   name?: string;
 };
 
