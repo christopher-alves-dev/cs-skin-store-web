@@ -9,5 +9,5 @@ type Props = ComponentProps<typeof Input> & {
 export const InputForm = ({ name, ...rest }: Props) => {
   const formContextMethods = useFormContext();
 
-  return <Input {...rest} {...formContextMethods.register(name)} />;
+  return <Input {...rest} {...formContextMethods?.register(name)} />;
 };
