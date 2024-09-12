@@ -14,12 +14,16 @@ export const schema = z.object({
         .number()
         .min(0)
         .optional()
-        .transform((value) => (!!value ? Number(value) : undefined)),
+        .transform((value) =>
+          value !== undefined ? Number(value) : undefined
+        ),
       max: z.coerce
         .number()
         .min(0)
         .optional()
-        .transform((value) => (!!value ? Number(value) : undefined)),
+        .transform((value) =>
+          value !== undefined ? Number(value) : undefined
+        ),
     })
     .optional(),
   float: z
@@ -28,12 +32,16 @@ export const schema = z.object({
         .number()
         .min(0)
         .optional()
-        .transform((value) => (!!value ? Number(value) : undefined)),
+        .transform((value) =>
+          value !== undefined ? Number(value) : undefined
+        ),
       max: z.coerce
         .number()
         .min(0)
         .optional()
-        .transform((value) => (!!value ? Number(value) : undefined)),
+        .transform((value) =>
+          value !== undefined ? Number(value) : undefined
+        ),
     })
     .optional(),
   orderBy: z

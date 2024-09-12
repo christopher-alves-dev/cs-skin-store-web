@@ -6,7 +6,7 @@ const index = (params?: FindAllParams) =>
   api.get("/items", {
     params,
     paramsSerializer(queryParams) {
-      return qs.stringify(queryParams, { arrayFormat: "repeat" });
+      return qs.stringify(queryParams, { arrayFormat: "comma" });
     },
   });
 
