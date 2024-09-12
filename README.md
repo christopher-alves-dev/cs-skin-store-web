@@ -1,8 +1,28 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Listagem de Skins de Counter Strike
 
-## Getting Started
+Bem-vindo ao projeto da Landing Page para exibir uma lista de Skins de Counter Strike! Este projeto foi desenvolvido com as seguintes tecnologias:
 
-First, run the development server:
+- **Next.js**: Framework para React que facilita o desenvolvimento de aplicações web com renderização no lado do servidor.
+- **Chakra UI**: Biblioteca de componentes React que fornece uma interface de usuário acessível e modular.
+- **React Hook Form**: Biblioteca para gerenciar formulários em React com validação e gerenciamento de estado.
+- **Zod**: Biblioteca de validação para garantir a integridade dos dados.
+
+## Funcionalidades
+
+- **Listagem de Skins**: Exibe uma lista de skins de Counter Strike, com detalhes e imagens.
+- **Filtragem de Skins**: Permite aos usuários filtrar as Skins através de categorias, nome, preço mínimo e/ou máximo e float (desgaste) mínimo e/ou máximo.
+- **Responsivo**: Design adaptável para diferentes tamanhos de tela.
+
+## Tecnologias e Ferramentas
+
+- **Next.js**: Utilizado para renderização do lado do servidor e geração de páginas estáticas.
+- **Chakra UI**: Para a criação de uma interface de usuário moderna e responsiva.
+- **React Hook Form**: Facilita a criação e validação de formulários.
+- **Zod**: Para validação de dados e garantias de tipo.
+
+## Como Rodar
+
+Primeiro, rode em modo de desenvolvimento.
 
 ```bash
 npm run dev
@@ -14,23 +34,6 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+A porta do projeto foi alterada para rodar na 3001 para prevenir conflito com a porta do backend.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Abra [http://localhost:3001](http://localhost:3001) com seu navegador para ver o resultado.
