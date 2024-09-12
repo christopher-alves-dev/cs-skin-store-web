@@ -1,5 +1,5 @@
 import qs from "qs";
-import { api } from "..";
+import { api } from "../";
 import { FindAllParams, FindAllResponse } from "./types";
 
 const index = (params?: FindAllParams) =>
