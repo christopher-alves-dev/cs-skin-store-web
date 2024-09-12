@@ -18,17 +18,7 @@ export const useFetchItems = () => {
 
   const fetchItems = async (params?: FindAllParams) => {
     try {
-      const res = await itemsApi.index({
-        ...(!!params?.name && {
-          name: params?.name,
-        }),
-        ...(!!params?.orderBy && {
-          orderBy: params?.orderBy,
-        }),
-        ...(!!params?.orderDirection && {
-          orderDirection: params?.orderDirection,
-        }),
-      });
+      const res = await itemsApi.index(params);
 
       setItems(res.data);
     } catch (error) {
