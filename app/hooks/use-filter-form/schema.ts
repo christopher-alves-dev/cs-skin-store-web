@@ -10,38 +10,26 @@ export const schema = z.object({
     .optional(),
   price: z
     .object({
-      min: z.coerce
-        .number()
-        .min(0)
+      min: z
+        .union([z.string(), z.number().min(0)])
         .optional()
-        .transform((value) =>
-          value !== undefined ? Number(value) : undefined
-        ),
-      max: z.coerce
-        .number()
-        .min(0)
+        .transform((value) => (!!value ? Number(value) : undefined)),
+      max: z
+        .union([z.string(), z.number().min(0)])
         .optional()
-        .transform((value) =>
-          value !== undefined ? Number(value) : undefined
-        ),
+        .transform((value) => (value === "" ? undefined : Number(value))),
     })
     .optional(),
   float: z
     .object({
-      min: z.coerce
-        .number()
-        .min(0)
+      min: z
+        .union([z.string(), z.number().min(0)])
         .optional()
-        .transform((value) =>
-          value !== undefined ? Number(value) : undefined
-        ),
-      max: z.coerce
-        .number()
-        .min(0)
+        .transform((value) => (value === "" ? undefined : Number(value))),
+      max: z
+        .union([z.string(), z.number().min(0)])
         .optional()
-        .transform((value) =>
-          value !== undefined ? Number(value) : undefined
-        ),
+        .transform((value) => (value === "" ? undefined : Number(value))),
     })
     .optional(),
   orderBy: z
