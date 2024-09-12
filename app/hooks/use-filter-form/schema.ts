@@ -1,3 +1,4 @@
+import { parseCurrencyToNumber } from "@/app/utils/parse-currency-to-number";
 import { z } from "zod";
 
 export const schema = z.object({
@@ -13,11 +14,11 @@ export const schema = z.object({
       min: z
         .union([z.string(), z.number().min(0)])
         .optional()
-        .transform((value) => (!!value ? Number(value) : undefined)),
+        .transform(parseCurrencyToNumber),
       max: z
         .union([z.string(), z.number().min(0)])
         .optional()
-        .transform((value) => (value === "" ? undefined : Number(value))),
+        .transform(parseCurrencyToNumber),
     })
     .optional(),
   float: z
@@ -25,11 +26,11 @@ export const schema = z.object({
       min: z
         .union([z.string(), z.number().min(0)])
         .optional()
-        .transform((value) => (value === "" ? undefined : Number(value))),
+        .transform(parseCurrencyToNumber),
       max: z
         .union([z.string(), z.number().min(0)])
         .optional()
-        .transform((value) => (value === "" ? undefined : Number(value))),
+        .transform(parseCurrencyToNumber),
     })
     .optional(),
   orderBy: z
