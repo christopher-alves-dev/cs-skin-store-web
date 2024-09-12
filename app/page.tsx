@@ -15,6 +15,16 @@ import {
   Button,
   Wrap,
   WrapItem,
+  Divider,
+  Box,
+  VStack,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionIcon,
+  AccordionPanel,
+  FormLabel,
+  HStack,
 } from "@chakra-ui/react";
 
 import { sortOptions, categoryOptions } from "./utils";
@@ -25,13 +35,17 @@ import { useFilterForm } from "./hooks/use-filter-form";
 import { DropdownForm } from "./components";
 import { FilterFormData } from "./hooks/use-filter-form/schema";
 import { parseParams } from "./utils/parse-params";
+import { parseToCurrency } from "./utils/parse-to-currency";
 
 export default function Home() {
   const { items, error, loading, fetchItems } = useFetchItems();
   const { formMethods } = useFilterForm();
 
+  // console.log({ errors: formMethods.formState.errors });
   const onSubmit: SubmitHandler<FilterFormData> = async (formValues) => {
+    console.log({ formValues });
     const params = parseParams(formValues);
+    console.log({ params });
     await fetchItems(params);
   };
 
@@ -47,44 +61,100 @@ export default function Home() {
   return (
     <FormProvider {...formMethods}>
       <Container maxW="8xl" p={8}>
-        <Wrap spacing={4}>
-          <DropdownForm
-            data={categoryOptions}
-            name="category"
-            placeholder="Todos os itens"
-          />
-          <WrapItem as="div" className="w-full" maxW={400}>
-            <InputForm
-              name="name"
-              placeholder="Procurar skin pelo nome"
-              size={["sm", "md"]}
+        <VStack>
+          <Wrap spacing={4}>
+            <DropdownForm
+              data={categoryOptions}
+              name="category"
+              placeholder="Todos os itens"
             />
-          </WrapItem>
-          <DropdownForm
-            data={sortOptions.types}
-            name="orderBy"
-            placeholder="Ordenar por"
-          />
-          <DropdownForm
-            data={sortOptions.directions}
-            name="orderDirection"
-            placeholder="Ordem"
-          />
-          <WrapItem>
-            <Button
-              colorScheme="blue"
-              size={["sm", "md"]}
-              onClick={formMethods.handleSubmit(onSubmit)}
-            >
-              Pesquisar
-            </Button>
-          </WrapItem>
-        </Wrap>
+            <WrapItem as="div" className="w-full" maxW={400}>
+              <InputForm
+                name="name"
+                placeholder="Procurar skin pelo nome"
+                size={["sm", "md"]}
+              />
+            </WrapItem>
+            <DropdownForm
+              data={sortOptions.types}
+              name="orderBy"
+              placeholder="Ordenar por"
+            />
+            <DropdownForm
+              data={sortOptions.directions}
+              name="orderDirection"
+              placeholder="Ordem"
+            />
+            <WrapItem>
+              <Button
+                colorScheme="blue"
+                size={["sm", "md"]}
+                onClick={formMethods.handleSubmit(onSubmit)}
+              >
+                Pesquisar
+              </Button>
+            </WrapItem>
+          </Wrap>
+          <Divider />
+          <Accordion allowToggle className="w-full">
+            <AccordionItem>
+              <h2>
+                <AccordionButton>
+                  <Box as="span" flex="1" textAlign="left">
+                    Filtros avançados
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel pb={4}>
+                <Wrap spacing={4}>
+                  <WrapItem>
+                    <Box>
+                      <FormLabel>Preço</FormLabel>
+                      <HStack>
+                        <InputForm
+                          size={["sm", "md"]}
+                          name="price.min"
+                          placeholder="Preço (min)"
+                        />
+                        <Divider w={8} />
+                        <InputForm
+                          size={["sm", "md"]}
+                          name="price.max"
+                          placeholder="Preço (max)"
+                        />
+                      </HStack>
+                    </Box>
+                  </WrapItem>
+                  <WrapItem>
+                    <Box>
+                      <FormLabel>Float</FormLabel>
+                      <HStack>
+                        <InputForm
+                          size={["sm", "md"]}
+                          name="float.min"
+                          placeholder="Float (min)"
+                        />
+                        <Divider w={8} />
+                        <InputForm
+                          size={["sm", "md"]}
+                          name="float.max"
+                          placeholder="Float (max)"
+                        />
+                      </HStack>
+                    </Box>
+                  </WrapItem>
+                </Wrap>
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
+        </VStack>
+
         <Stack spacing={8} p={5}>
-          <Heading as="h1" size="xl" mb={5}>
+          <Heading as="h1" size="lg">
             Lista de Itens
           </Heading>
-          {items.length === 0 ? (
+          {!items.length ? (
             <Text>Nenhum item encontrado.</Text>
           ) : (
             <SimpleGrid
@@ -104,15 +174,17 @@ export default function Home() {
                         </Text>
                       </Stack>
                       <Image
-                        boxSize="160px"
-                        objectFit="cover"
-                        src="https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposr-kLAtl7PDdTjlH7duJhJKCmePnJ6nUl2Zu5Mx2gv2P9o-t21fj-RI_Nz2ncYbDcFNoYArYrgDql-3m08PptcjBn3tgs3Yis2GdwUJr9IfvpA/"
+                        boxSize={160}
+                        objectFit="contain"
+                        src={item.image}
                         alt={item.name}
                         borderRadius="md"
                       />
                       <Stack spacing={2} className="w-full">
-                        <Text>Preço: R$ {item.price.toFixed(2)}</Text>
-                        <Text>Float: {item.float || "N/A"}</Text>
+                        <Text textAlign="center">
+                          {parseToCurrency(item.price)}
+                        </Text>
+                        {!!item.float && <Text>Float: {item.float}</Text>}
                       </Stack>
                     </Stack>
                   </CardBody>
