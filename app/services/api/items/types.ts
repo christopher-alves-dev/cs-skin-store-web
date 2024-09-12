@@ -15,3 +15,14 @@ type OrderParams = {
 };
 
 export type FindAllParams = FilterParams & OrderParams;
+
+export type Skin = {
+  id: string;
+  name: string;
+  image: string;
+  category: string;
+  float?: string;
+  price: number;
+};
+
+export type FindAllResponse = Skin[];

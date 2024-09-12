@@ -1,9 +1,9 @@
 import qs from "qs";
 import { api } from "..";
-import { FindAllParams } from "./types";
+import { FindAllParams, FindAllResponse } from "./types";
 
 const index = (params?: FindAllParams) =>
-  api.get("/items", {
+  api.get<FindAllResponse>("/items", {
     params,
     paramsSerializer(queryParams) {
       return qs.stringify(queryParams, { arrayFormat: "comma" });

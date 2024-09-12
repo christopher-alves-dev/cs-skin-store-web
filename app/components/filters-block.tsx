@@ -26,7 +26,6 @@ type Props = {
 
 export const FiltersBlock = ({ onRequestFetchItems }: Props) => {
   const formContextMethods = useFormContext();
-  console.log({ watch: formContextMethods.watch() });
   const onSubmit: SubmitHandler<FilterFormData> = (formValues) => {
     const params = parseParams(formValues);
     onRequestFetchItems(params);
