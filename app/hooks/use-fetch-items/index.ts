@@ -18,7 +18,7 @@ export const useFetchItems = () => {
     dispatch({ type: ACTIONS_TYPE.FETCH_START });
     try {
       const res = await itemsApi.index(params);
-      await new Promise((resolve) => setTimeout(resolve, 3000));
+
       dispatch({ type: ACTIONS_TYPE.FETCH_SUCCESS, payload: res.data });
     } catch (error) {
       toast({
