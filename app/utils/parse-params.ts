@@ -39,6 +39,5 @@ export const parseParams = (formValues: FilterFormData): FindAllParams => {
   addParam(parsedData, "orderBy", formValues.orderBy?.value);
   addParam(parsedData, "orderDirection", formValues.orderDirection?.value);
 
-  console.log({ parsedData });
   return parsedData;
 };
