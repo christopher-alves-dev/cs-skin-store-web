@@ -1,26 +1,34 @@
 const types = [
   {
-    label: 'Preço',
-    value: 'price'
+    label: "Ordenar por",
+    value: "",
   },
   {
-    label: 'Float (Desgaste)',
-    value: 'float'
-  }
-]
+    label: "Preço",
+    value: "price",
+  },
+  {
+    label: "Float (Desgaste)",
+    value: "float",
+  },
+];
 
 const directions = [
   {
-    label: 'Crescente',
-    value: 'asc'
+    label: "Ordem",
+    value: "",
   },
   {
-    label: 'Decrescente',
-    value: 'desc'
-  }
-]
+    label: "Crescente",
+    value: "asc",
+  },
+  {
+    label: "Decrescente",
+    value: "desc",
+  },
+];
 
 export const sortOptions = {
   types,
-  directions
-}
+  directions,
+};

@@ -1,5 +1,9 @@
 export const categoryOptions = [
   {
+    label: "Todos os itens",
+    value: "",
+  },
+  {
     label: "Adesivo",
     value: "adesivo",
   },
@@ -8,32 +12,12 @@ export const categoryOptions = [
     value: "agente",
   },
   {
-    label: "Chave",
-    value: "chave",
-  },
-  {
-    label: "Colecionável",
-    value: "colecionavel",
-  },
-  {
-    label: "Emblema",
-    value: "emblema",
-  },
-  {
-    label: "Escopeta",
-    value: "escopeta",
-  },
-  {
     label: "Faca",
     value: "faca",
   },
   {
     label: "Luvas",
     value: "luvas",
-  },
-  {
-    label: "Metralhadora",
-    value: "metralhadora",
   },
   {
     label: "Pistola",
@@ -49,14 +33,10 @@ export const categoryOptions = [
   },
   {
     label: "Rifle de Precisão",
-    value: "rifleDePrecisao",
+    value: "rifle_de_precisao",
   },
   {
     label: "Submetralhadora",
     value: "submetralhadora",
-  },
-  {
-    label: "Trilha Sonora",
-    value: "trilhaSonora",
   },
 ];
