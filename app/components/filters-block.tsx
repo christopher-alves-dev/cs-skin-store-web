@@ -33,7 +33,7 @@ export const FiltersBlock = ({ onRequestFetchItems }: Props) => {
 
   return (
     <VStack>
-      <Wrap spacing={4}>
+      <Wrap spacing={4} w="100%">
         <DropdownForm
           data={categoryOptions}
           name="category"
